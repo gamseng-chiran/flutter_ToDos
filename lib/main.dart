@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:to_do/add.dart';
 import 'package:to_do/list.dart';
 import 'package:to_do/modal.dart';
 import 'package:to_do/onboard.dart';
@@ -95,14 +91,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
-                        minimumSize: Size(60, 60),
+                        minimumSize: Size(30, 30),
                         shape: CircleBorder(), 
                         elevation: 10),
                     onPressed: () {
-                      addItem(_ToDoController.text);
+                      if(_ToDoController.text.isNotEmpty){
+                        addItem(_ToDoController.text);
+                      }
+                      
                     },
                     child: Text(
-                      'add',
+                      '+',
                       style: TextStyle(fontSize: 30,
                       color: Colors.black38),
                     )),
@@ -125,11 +124,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void addItem(String toDO) {
-      setState(() {
+    setState(() {
       todoList.add(ToDo(
           id: DateTime.now().millisecondsSinceEpoch.toString(),
           todoText: toDO));
-    });
+      
     _ToDoController.clear();
+    });
+      
   }
 }
+
